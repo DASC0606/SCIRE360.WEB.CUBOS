@@ -1,1 +1,4 @@
-﻿
+﻿C1.Web.Api.DataEngine.LicenseDetector, C1.Web.Api.DataEngine
+C1.Web.Api.LicenseDetector, C1.Web.Api
+C1.Web.Mvc.LicenseDetector, C1.Web.Mvc
+C1.Web.Mvc.Olap.LicenseDetector, C1.Web.Mvc.Olap
