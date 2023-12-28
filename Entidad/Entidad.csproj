@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D9A00ADB-0367-44F8-AEA8-17F9B994B541}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Entidad</RootNamespace>
+    <AssemblyName>Entidad</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Http.Features">
+      <HintPath>..\SCIRE360.WEB.CUBOS\Dll\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EncDec.cs" />
+    <Compile Include="EntityApi\BoletaAWSBE.cs" />
+    <Compile Include="EntityApi\FilesMail.cs" />
+    <Compile Include="EntityApi\InboxCustom.cs" />
+    <Compile Include="EntityApi\InboxMail.cs" />
+    <Compile Include="EntityApi\InboxPeriodoEA.cs" />
+    <Compile Include="EntityApi\CtacteMonedaEA.cs" />
+    <Compile Include="EntityApi\InboxEA.cs" />
+    <Compile Include="EntityApi\LegajoPersonalCategoriaDetalleEA.cs" />
+    <Compile Include="EntityApi\LegajoPersonalCategoriaEA.cs" />
+    <Compile Include="EntityApi\LegajoPersonalTipoEA.cs" />
+    <Compile Include="EntityApi\LegajosMasivoEA.cs" />
+    <Compile Include="EntityApi\RespuestaLegajosMasivo.cs" />
+    <Compile Include="EntityApi\TblDocsDigitalLegajoEA.cs" />
+    <Compile Include="EntityApi\TblDocsDigitalRutaEA.cs" />
+    <Compile Include="EntityApi\TblEjercicioScirePlanBE.cs" />
+    <Compile Include="EntityApi\TblPeriodosDocsDigitalEA.cs" />
+    <Compile Include="EntityApi\TblProcesosScirePlanEA.cs" />
+    <Compile Include="EntityApi\TblRolEA.cs" />
+    <Compile Include="Entity\Autenticate.cs" />
+    <Compile Include="Entity\AwsS3LegajosBE.cs" />
+    <Compile Include="Entity\buzon_ebl.cs" />
+    <Compile Include="Entity\Cobertura_ebl.cs" />
+    <Compile Include="Entity\Compania_ebl.cs" />
+    <Compile Include="Entity\CorreoBE.cs" />
+    <Compile Include="Entity\CtaCteDetail_ebl.cs" />
+    <Compile Include="Entity\CtaCte_ebl.cs" />
+    <Compile Include="Entity\Cubo_CuentasCorrientes.cs" />
+    <Compile Include="Entity\Cubo_Datos.cs" />
+    <Compile Include="Entity\Cubo_Padron.cs" />
+    <Compile Include="Entity\Cubo_Planilla.cs" />
+    <Compile Include="Entity\Detail1SlipPay.cs" />
+    <Compile Include="Entity\DetailVacationByUser.cs" />
+    <Compile Include="Entity\Ejercicio_ebl.cs" />
+    <Compile Include="Entity\HeaderSlipPay.cs" />
+    <Compile Include="Entity\iReports.cs" />
+    <Compile Include="Entity\LegajoPersonalCategoriaBE.cs" />
+    <Compile Include="Entity\LegajoPersonalCategoriaDetalleBE.cs" />
+    <Compile Include="Entity\LegajoPersonalTipoBE.cs" />
+    <Compile Include="Entity\ListRespuestaBE.cs" />
+    <Compile Include="Entity\Mes_ebl.cs" />
+    <Compile Include="Entity\Moneda_ebl.cs" />
+    <Compile Include="Entity\MotivoPrestamo_ebl.cs" />
+    <Compile Include="Entity\notificacion_ebl.cs" />
+    <Compile Include="Entity\Opccion_Users.cs" />
+    <Compile Include="Entity\ParametersNotificacion_ebl.cs" />
+    <Compile Include="Entity\Password_ebl.cs" />
+    <Compile Include="Entity\Periodo_ebl.cs" />
+    <Compile Include="Entity\Permiso_rol_ebl.cs" />
+    <Compile Include="Entity\Personal_ebl.cs" />
+    <Compile Include="Entity\Planilla_ebl.cs" />
+    <Compile Include="Entity\PrestamosAdelanto_ebl.cs" />
+    <Compile Include="Entity\Proceso_ebl.cs" />
+    <Compile Include="Entity\Recurso_ebl.cs" />
+    <Compile Include="Entity\ResetPassword.cs" />
+    <Compile Include="Entity\RespuestaAWSBE.cs" />
+    <Compile Include="Entity\RespuestaBE.cs" />
+    <Compile Include="Entity\Rol_ebl.cs" />
+    <Compile Include="Entity\SolicitudPrestamoSendCorreo_ebl.cs" />
+    <Compile Include="Entity\TblCompania.cs" />
+    <Compile Include="Entity\TblUsuarioBE.cs" />
+    <Compile Include="Entity\Tbl_CompaniaBE.cs" />
+    <Compile Include="Entity\Tbl_DocsDigital_LegajosBE.cs" />
+    <Compile Include="Entity\Tbl_DocsDigital_RutasBE.cs" />
+    <Compile Include="Entity\Tbl_Periodos_DocsDigitalBE.cs" />
+    <Compile Include="Entity\UserInfoVacaSolicitud.cs" />
+    <Compile Include="Entity\UserInfoVac_ebl.cs" />
+    <Compile Include="Entity\UserInfo_ebl.cs" />
+    <Compile Include="Entity\Users_ebl.cs" />
+    <Compile Include="Entity\Vacation_ebl.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TipoOperacion.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

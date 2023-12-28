@@ -1,0 +1,42 @@
+﻿using Alvisoft.DataAccessLayer;
+using Entidad;
+using Entidad.Entity;
+using SCIRE360.WEB.CUBOS.API.Entity;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Negocio
+{
+    public class TblUsuarioNE
+    {
+        public async Task<List<Cubo_Planilla>> listarCuboPlanilla(string token, string id_compania, string id_ejercicio, string Proceso_Id, string id_planilla, string id_periodo, string id_mes, string id_cobertura)
+        {
+            TblUsuarioDA Proc = new TblUsuarioDA();
+            return await Proc.listarCuboPlanilla(token, id_compania, id_ejercicio, Proceso_Id, id_planilla, id_periodo, id_mes, id_cobertura);
+        }
+        public async Task<List<Cubo_Datos>> listarCuboDatos(string token, string id_compania, string id_ejercicio, string Proceso_Id, string id_planilla, string id_periodo, string id_mes, string id_cobertura)
+        {
+            TblUsuarioDA Proc = new TblUsuarioDA();
+            return await Proc.listarCuboDatos(token, id_compania, id_ejercicio, Proceso_Id, id_planilla, id_periodo, id_mes, id_cobertura);
+        }
+        public async Task<List<Cubo_Padron>> listarCuboPadron(string token, string id_compania, string id_ejercicio, string Proceso_Id, string id_planilla, string id_periodo, string id_mes, string id_cobertura)
+        {
+            TblUsuarioDA Proc = new TblUsuarioDA();
+            return await Proc.listarCuboPadron(token, id_compania, id_ejercicio, Proceso_Id, id_planilla, id_periodo, id_mes, id_cobertura);
+        }
+        public async Task<List<Cubo_CuentasCorrientes>> listarCuboCuentasCorrientes(string token, string id_compania, string id_ejercicio, string Proceso_Id, string id_planilla, string id_periodo, string id_mes, string id_cobertura)
+        {
+            TblUsuarioDA Proc = new TblUsuarioDA();
+            return await Proc.listarCuboCuentasCorrientes(token, id_compania, id_ejercicio, Proceso_Id, id_planilla, id_periodo, id_mes, id_cobertura);
+        }
+        public async Task<List<Cubo_Vacation>> listarCuboVacation(string token, string id_compania, string id_ejercicio, string Proceso_Id, string id_planilla, string id_periodo, string id_mes, string id_cobertura)
+        {
+            TblUsuarioDA Proc = new TblUsuarioDA();
+            return await Proc.listarCuboVacation(token, id_compania, id_ejercicio, Proceso_Id, id_planilla, id_periodo, id_mes, id_cobertura);
+        }
+    }
+}

@@ -1,0 +1,389 @@
+﻿@using System.Data
+@model DataTable
+
+@{
+    DataTable OpcionMenu = null;
+    DataTable tblFiltered = null;
+
+    if (Session["OpcionMenu"] == null)
+    {
+        OpcionMenu = new DataTable();
+    }
+    else
+    {
+        OpcionMenu = (DataTable)Session["OpcionMenu"];
+    }
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="~/Content/images/favicon.png" />
+
+
+    <title>@ViewBag.Title | Scire Portal</title>
+
+    <!-- Bootstrap -->
+    <link href="~/Vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="~/Vendors/fontawesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.0.1/css/font-awesome-ie7.min.css" />
+    <!-- NProgress -->
+    <link href="~/Vendors/nprogress/nprogress.css" rel="stylesheet" />
+    <!-- Switchery -->
+    <link href="~/Vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="~/Vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" />
+
+    <link href="~/Vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+    <!-- PNotify -->
+    <link href="~/Vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="~/Vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="~/Vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="~/Content/SCIRE360.WEB.CUBOS/css/custom.css" rel="stylesheet" />
+    <!--Data table-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css" />
+    
+    <link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/23.1.3/css/dx.light.css">
+
+    @RenderSection("styles", required: false)
+
+</head>
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a id="logo-normal" href="@Url.Action("index", "setParametersinfo")">
+                            <img class="site_title" style="padding-left: 33px !important;height:48px !important" src="~/Image/Scire 360.png" alt="logo" />
+                        </a>
+                        <a id="logo-min" href="@Url.Action("index", "setParametersinfo")" hidden>
+                            <img class="site_title" style="height: 15px" src="~/Image/Scire 360.png" alt="logo" />
+                        </a>
+
+                    </div>
+                    <div class="clearfix"></div>
+
+                        <div class="profile clearfix">
+                            <div class="profile_pic">
+                                <img src="~/Content/images/logo.png" width="230" height="115" class="profile_img">
+                            </div>
+                        </div>
+
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            @if (Session["FotoPerfil"].ToString() != "")
+                            {
+                                <img src="@Session["FotoPerfil"].ToString()" alt="Imagen de Usuario" class="img-circle profile_img">
+                            }
+                            else
+                            {
+                                <img src="~/Content/images/user.png" alt="Imagen de Usuario" class="img-circle profile_img">
+                            }
+                        </div>
+                        <div class="profile_info">
+                            <span>Bienvenido,</span>
+                            <h2>@Session["Nomb_personal"]</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <ul class="nav side-menu">
+                                @{
+                                    int fila = 0;
+                                    int columna = 0;
+
+                                    string id_permiso_recurso = "";
+                                    string id_permiso_recursos = "";
+                                    string css = "";
+                                }
+                                @foreach (DataRow rows in OpcionMenu.Rows)
+                                {
+                                    <li>
+
+                                        @if (@rows["flag_padre"].Equals(true))
+                                        {
+                                            fila++;
+                                            columna = 0;
+                                            tblFiltered = OpcionMenu.AsEnumerable()
+                                                      .Where(row => row.Field<Int64>("id_permiso_re_pa") == Convert.ToInt64(@rows["id_permiso_recurso"].ToString()))
+                                                      .CopyToDataTable();
+                                            id_permiso_recurso = "auth" + @rows["id_permiso_recurso"].ToString();
+                                            id_permiso_recursos = "#auth" + @rows["id_permiso_recurso"].ToString();
+                                            css = @rows["desc_objetivos"].ToString();
+                                            <a><i class="@css"></i> @rows["nomb_seccion_recurso"].ToString() <span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                @foreach (DataRow rowss in tblFiltered.Rows)
+                                                {
+                                                    <li><a href="@Url.Action(@rowss["codi_recurso"].ToString(),  @rowss["codi_webform"].ToString())">@rowss["nomb_seccion_recurso"].ToString()</a></li>
+                                                }
+                                            </ul>
+
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <div class="nav toggle">
+                        <a id="menu_toggle" onclick="active()"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <nav class="nav navbar-nav">
+                        <ul class=" navbar-right">
+                            <li class="nav-item dropdown open" style="padding-left: 15px;">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                                    @if (Session["FotoPerfil"].ToString() != "")
+                                    {
+                                        <img src="@Session["FotoPerfil"].ToString()" alt="Imagen de Usuario" class="img-circle">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Content/images/user.png" alt="">
+                                    }
+                                </a>
+                                <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="@Url.Action("Index", "ChangePass")">Cambiar contraseña</a>
+                                    <a class="dropdown-item" href="@Url.Action("Login", "Autenticate")"><i class="fa fa-sign-out pull-right"></i> Cerrar Sesión</a>
+                                </div>
+                            </li>
+
+                            <li role="presentation" class="nav-item dropdown open">
+                                <a href="javascript:;" class="dropdown-toggle info-number" style="display:block!important;padding-top:8px!important;" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-envelope-o"></i>
+                                    <span class="badge bg-green" style="top:0px!important" id="badgeNotifications"></span>
+                                </a>
+                                <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
+                                    <li class="nav-item">
+                                        <a class="dropdown-item">
+                                            <span class="image"><img src="~/Content/images/user.png" alt="Profile Image" /></span>
+                                            <span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
+                                            </span>
+                                            <span class="message">
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            <!-- page content -->
+            <div class="right_col" role="main">
+                @RenderBody()
+            </div>
+            <!-- /page content -->
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    Copyright © Alvisoft Perú 2019.<a href="https://www.alvisoft.net/">Colorlib</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <button id="playAudio" onclick="" hidden></button>
+            <audio id="notify" controls>
+                <source type="audio/mp3" src="..\Image\notify.mp3">
+            </audio>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+    <!--<script src="~/Vendors/jquery/jquery.min.js"></script>-->
+    <script src="~/Vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/Vendors/nprogress/nprogress.js"></script>
+
+    <script src="~/Vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- Switchery -->
+    <script src="~/Vendors/switchery/dist/switchery.min.js"></script>
+    <!-- iCheck -->
+    <script src="~/Vendors/iCheck/icheck.min.js"></script>
+    <!-- PNotify -->
+    <script src="~/Vendors/pnotify/dist/pnotify.js"></script>
+    <script src="~/Vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="~/Vendors/pnotify/dist/pnotify.nonblock.js"></script>
+    <!-- gauge.js -->
+    <script src="~/Vendors/gauge.js/dist/gauge.min.js"></script>
+
+    <script src="~/Vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+
+    <!-- Flot -->
+    <script src="~/Vendors/Flot/jquery.flot.js"></script>
+    <script src="~/Vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="~/Vendors/Flot/jquery.flot.time.js"></script>
+    <script src="~/Vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="~/Vendors/Flot/jquery.flot.resize.js"></script>
+
+    <!-- Flot plugins -->
+    <script src="~/Vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="~/Vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="~/Vendors/flot.curvedlines/curvedLines.js"></script>
+
+    <!-- DateJS -->
+    <script src="~/Vendors/DateJS/build/date.js"></script>
+
+    <script src="~/Vendors/moment/min/moment.min.js"></script>
+    <script src="~/Vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <script src="~/Content/SCIRE360.WEB.CUBOS/js/custom.js"></script>
+    <!--Data table-->
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    @RenderSection("scripts", required: false)
+<script type="text/javascript">
+        $('#navbarDropdown1').hide();
+        var InboxNotification=[];
+    var connectionNotification = new signalR.HubConnectionBuilder().withUrl("http://52.207.26.213/SCIRE360.WEB.CUBOSAPI/Inbox").build();
+        connectionNotification.start().then(function () {
+            console.log("Conexcion exitosa");
+            getNotifications();
+        }).catch(function (err) {
+            console.log("error", err);
+        });
+
+        let cargaInicialInboxNotification = "CargaInicialInboxNotification" + "@Session["RUC"].ToString()" + "@Session["IdPersonal"].ToString()";
+        connectionNotification.on(cargaInicialInboxNotification, function (data) {
+            console.log(cargaInicialInboxNotification);
+            console.log(data)
+            InboxNotification = data;
+            refreshNotifications(InboxNotification);
+        });
+        let recibir = "RecibirInboxNotification" + "@Session["RUC"].ToString()" + "@Session["IdPersonal"].ToString()";
+        connectionNotification.on(recibir, function (data) {
+                console.log(recibir);
+                InboxNotification.unshift(data);
+                refreshNotifications(InboxNotification);
+                playNotification();
+            });
+
+            let leer = "LeerInboxNotification" + "@Session["RUC"].ToString()" + "@Session["IdPersonal"].ToString()";
+        connectionNotification.on(leer, function (data) {
+            console.log(leer);
+            let index = InboxNotification.findIndex(x => x.idInbox == data.idInbox);
+            removeNotification(index);
+            refreshNotifications(InboxNotification);
+        });
+
+        function removeNotification(index) {
+            InboxNotification.splice(index, 1);
+        }
+        function refreshNotifications(data) {
+            let count = data.length;
+            if (count > 0) {
+                $('#navbarDropdown1').show();
+            } else {
+                $('#navbarDropdown1').hide();
+            }
+            $('#badgeNotifications').html(count);
+            var html = ``;
+            $(data).each(function (i, v) {
+                let formated = formatDate(v.sendDate);
+                html += `<li class="nav-item">
+                            <a class="dropdown-item" href="@Url.Action("index", "Inbox")">
+                                <span>
+                                    <span class="time">${formated}</span>
+                                    <strong class="nameFiles" style="width:100%">${v.nombPersonal} ${v.apellidoPaterno} ${v.apellidoMaterno}</strong>
+                                </span>
+                                <span class="nameFiles" style="width:100%">
+                                    ${v.title}
+                                </span>
+                            </a>
+                        </li>`;
+            });
+            $('.msg_list').html(html);
+        }
+
+        function getNotifications() {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("FillInboxNotification", "Inbox")',
+                data: {},
+                //contentType: "application/json; charset=utf-8",
+                //dataType: "json",
+                success: function (data) {
+
+                },
+                error: function (msg) {
+                    console.log(msg);
+                    alert(msg);
+                }
+            });
+        }
+
+        function formatDate(date) {
+            date = new Date(date);
+            var today = new Date();
+            let time = formatAMPM(date);
+            if (moment(date).format("DD/MM/YYYY") == moment(today).format("DD/MM/YYYY")) {
+                return time;
+            }
+            var formatted = moment(date).format("DD/MM/YYYY");
+            return formatted;
+        }
+
+        function formatAMPM(date) {
+            var strTime = moment(date).format("hh:mm A");
+            return strTime;
+        }
+
+        function active() {
+            const logo = document.getElementById("logo-normal");
+            const logomin = document.getElementById("logo-min");
+
+            let isActivate = logo.getAttribute("hidden");
+            if (isActivate) {
+                logomin.setAttribute("hidden", true);
+                logo.removeAttribute("hidden");
+            } else {
+                logo.setAttribute("hidden", true);
+                logomin.removeAttribute("hidden");
+            }
+
+        }
+
+        function playNotification() {
+            var audio = document.getElementById("notify");
+            audio.play();
+        }
+
+</script>
+</body>
+</html>

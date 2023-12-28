@@ -1,0 +1,506 @@
+﻿@{
+    ViewBag.Title = "Cubo de planillas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <style>
+    </style>
+}
+<div class="row">
+    <div class="col">
+        @using (Html.BeginForm(null, null, FormMethod.Post))
+        {
+            <ol class="breadcrumb" style="justify-content: center; align-items: center;">
+                <li class="breadcrumb-item">
+                    @if (Session["LogoCompaniaRectangulo"].ToString() != "")
+                    {
+                        <img width="230" height="55" src="@Session["LogoCompaniaRectangulo"].ToString()" alt="logo" />
+                    }
+                    else
+                    {
+                        <img style="height: 45px" src="~/Image/SCIRE360.WEB.CUBOSttttt.png" alt="logo" />
+                    }
+
+                </li>
+            </ol>
+            if (Session["StripeColor"].ToString() != "")
+            {
+                <ol class="breadcrumb" style="justify-content: center; align-items: center;padding: 4px;background-color:@Session["StripeColor"].ToString();">
+                    <li class="breadcrumb-item">
+
+                    </li>
+                </ol>
+            }
+            <!-- Breadcrumbs-->
+            if (Session["StripeColor"].ToString() != "")
+            {
+                <ol class="breadcrumb" style="background-color: @Session["StripeColor"].ToString();">
+                    <li class="breadcrumb-item">
+                        <i style="font-size: 16px;">
+                            <b>
+                                <label id="lblSetParameters" style="font-size: 15px; font-weight: bold; color: white;/*mix-blend-mode: difference;*/">@Session["SELPER"]</label>
+                            </b>
+                        </i>
+                    </li>
+                </ol>
+            }
+            else
+            {
+                <ol class="breadcrumb" style="background-color: #987cc8">
+                    <li class="breadcrumb-item">
+                        <i style="font-size: 16px;">
+                            <b>
+                                <label id="lblSetParameters" style="font-size: 15px; font-weight: bold; color: white;">@Session["SELPER"]</label>
+                            </b>
+                        </i>
+                    </li>
+                </ol>
+            }
+            <div class="container-fluid">
+                <div class="container-fluid">
+                    <div class="row">
+                    </div>
+                    <div class="row">
+                        <h4><i><b>CUBO DE DATOS</b> | <span style="font-size: 12px;">Mediante esta pantalla podrá establecer parametros para mostrar en cubo de datos como tambien elegir el tipo de Grafico</span></i></h4>
+                    </div>
+                    <br />
+                </div>
+            </div>
+
+            <!-- DataTables Example -->
+            <div class="card mb-0">
+                <div class="card-header" style="text-align: center">
+                    <strong>Establecer parametros Cubo de Datos</strong>
+                </div>
+
+                <div class="card-body">
+                    <div class="col-lg- d-none d-lg-block bg-register-image"></div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group" style="margin-bottom: 5pt;">
+                                @if (ViewBag.ddl_compania != null)
+                                {
+                                    @Html.DropDownList("ddl_compania", null, "SELECCIONE UNA EMPRESA", new { @class = "btn btn-sm btn-outline-primary ", @style = "width:100%; color:black; background-color:white; font-weight: bold;" })
+                                }
+                            </div>
+                            <div class="form-group" style="margin-bottom: 5pt;">
+                                @if (ViewBag.ddl_planilla != null)
+                                {
+                                    @Html.DropDownList("ddl_planilla", ViewBag.ddl_planilla as List<SelectListItem>, "SELECCIONE PLANILLA", new { @class = "btn btn-sm btn-outline-primary ", @style = "width:100%; color:black; background-color:white; font-weight: bold;" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownList("ddl_planilla", new SelectList(string.Empty, "Value", "Text"), "SELECCIONE PLANILLA", new { @class = "btn btn-sm btn-outline-primary ", @style = "width:100%; color:black; background-color:white; font-weight: bold;" })
+                                }
+                            </div>
+                            <div class="form-group" style="margin-bottom: 5pt;">
+                                @if (ViewBag.ddl_proceso != null)
+                                {
+                                    @Html.DropDownList("ddl_proceso", ViewBag.ddl_proceso as List<SelectListItem>, "SELECCIONE PROCESO", new { @class = "btn btn-sm btn-outline-primary ", @style = "width:100%; color:black; background-color:white; font-weight: bold;" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownList("ddl_proceso", new SelectList(string.Empty, "Value", "Text"), "SELECCIONE PROCESO", new { @class = "btn btn-sm btn-outline-primary ", @style = "width:100%; color:black; background-color:white; font-weight: bold;" })
+                                }
+
+                            </div>
+                            <div class="form-group" style="margin-bottom: 5pt;">
+                                @if (ViewBag.ddl_cobertura != null)
+                                {
+                                    @Html.DropDownList("ddl_cobertura", ViewBag.ddl_cobertura as List<SelectListItem>, "SELECCIONE COBERTURA", new { @class = "btn btn-sm btn-outline-primary ", @style = "width:100%; color:black; background-color:white; font-weight: bold;" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownList("ddl_cobertura", new SelectList(string.Empty, "Value", "Text"), "SELECCIONE COBERTTURA", new { @class = "btn btn-sm btn-outline-primary ", @style = "width:100%; color:black; background-color:white; font-weight: bold;" })
+                                }
+                            </div>
+                            <div class="form-group" style="margin-bottom: 5pt;">
+                                @if (ViewBag.ddl_ejercicio != null)
+                                {
+                                    @Html.DropDownList("ddl_ejercicio", ViewBag.ddl_ejercicio as List<SelectListItem>, "SELECCIONE EJERCICIO", new { @class = "btn btn-sm btn-outline-primary ", @style = "width:100%; color:black; background-color:white; font-weight: bold;" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownList("ddl_ejercicio", new SelectList(string.Empty, "Value", "Text"), "SELECCIONE EJERCICIO", new { @class = "btn btn-sm btn-outline-primary ", @style = "width:100%; color:black; background-color:white; font-weight: bold;" })
+                                }
+                            </div>
+                            <div class="form-group" style="margin-bottom: 5pt;">
+                                @if (ViewBag.ddl_mes != null)
+                                {
+                                    @Html.DropDownList("ddl_mes", ViewBag.ddl_mes as List<SelectListItem>, "SELECCIONE MES", new { @class = "btn btn-sm btn-outline-primary ", @style = "width:100%; color:black; background-color:white; font-weight: bold;" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownList("ddl_mes", new SelectList(string.Empty, "Value", "Text"), "SELECCIONE MES", new { @class = "btn btn-sm btn-outline-primary ", @style = "width:100%; color:black; background-color:white; font-weight: bold;" })
+                                }
+                            </div>
+                            <div class="form-group" style="margin-bottom: 5pt;">
+                                @if (ViewBag.ddl_periodo != null)
+                                {
+                                    @Html.DropDownList("ddl_periodo", ViewBag.ddl_periodo as List<SelectListItem>, "SELECCIONE PERIODO", new { @class = "btn btn-sm btn-outline-primary ", @style = "width:100%; color:black; background-color:white; font-weight: bold;" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownList("ddl_periodo", new SelectList(string.Empty, "Value", "Text"), "SELECCIONE PERIODO", new { @class = "btn btn-sm btn-outline-primary ", @style = "width:100%; color:black; background-color:white; font-weight: bold;" })
+                                }
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group" style="margin-bottom: 5pt;">
+                                @if (ViewBag.ddl_grafico != null)
+                                {
+                                    @Html.DropDownList("ddl_grafico", ViewBag.ddl_grafico as List<SelectListItem>, "SELECCIONE GRAFICO", new { @class = "btn btn-sm btn-outline-primary ", @style = "width:100%; color:black; background-color:white; font-weight: bold;" })
+
+                                }
+                                else
+                                {
+                                    @Html.DropDownList("ddl_grafico", new SelectList(string.Empty, "Value", "Text"), "SELECCIONE GRAFICO", new { @class = "btn btn-sm btn-outline-primary ", @style = "width:100%; color:black; background-color:white; font-weight: bold;" })
+
+                                }
+                                <label style="font-weight: bold;font-size: 11px; background:#987cc8;color:white;"> &nbsp;SELECCIONAR GRÀFICO &#8593; &#8593; &#8593; &nbsp;</label>
+
+                            </div>
+                            <div class="form-group" style="padding-left:5%">
+                                @Html.RadioButton("xCube", "1", new { @id = "rb_planilla", @Checked = "true" })
+                                <b>Cubo Padrón de Cálculo de Planilla</b>
+                            </div>
+                            <div class="form-group" style="padding-left:5%">
+                                @Html.RadioButton("xCube", "2", new { @id = "rb_datos" })
+                                <b>Cubo Padrón de Datos</b>
+                            </div>
+                            <div class="form-group" style="padding-left:5%">
+                                @Html.RadioButton("xCube", "3", new { @id = "rb_padron" })
+                                <b>Cubo Padrón de Trabajadores</b>
+                            </div>
+                            <div class="form-group" style="padding-left:5%">
+                                @Html.RadioButton("xCube", "4", new { @id = "rb_cuentas" })
+                                <b> Cubo Padrón de Cuentas Corrientes</b>
+                            </div>
+                            <div class="form-group" style="padding-left:5%">
+                                @Html.RadioButton("xCube", "5", new { @id = "rb_Ccc" })
+                                <b> Cubo Padrón de Vacaciones</b>
+                            </div>
+                            <div class="form-group" style="text-align:center;">
+                                <a id="btnXcube" class="btn btn-danger btn-sm " style="color: white;width:100%;cursor:pointer;"><b>CARGAR CUBO DE DATOS</b></a>
+                                @*   @Html.ActionLink("CARGAR CUBO DE DATOS", "Index", "Cubo", null, new { @id = "btnXcube", @class = "btn btn-danger btn-sm", @style = "color: white;width:100%", target = "_blank" })*@
+                            </div>
+                        </div>
+                    </div>
+                    <div id="divinfo"></div>
+                    <div id="divmessage"></div>
+                    <div>
+                        @if (Session["DivInfoVC"] != null)
+                        {
+                            <div>
+                                @if (Session["DivInfoVC"].ToString() == "True")
+                                {
+                                    <div id="divinfo" class="@Session["DivInfoCssC"]"><p><b><p />@Session["DivMessageC"]</b></p></div>
+                                }
+                            </div>
+                        }
+                    </div>
+                    @*<div class="col-lg-12" style="text-align: center">
+                        <p></p>
+                        <%----%>
+                    </div>*@
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        window.onload = function () {
+            FillPlanilla();
+        };
+        function FillPlanilla() {
+            //Dropdownlist Selectedchange event
+
+            $("#ddl_planilla").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("FillPlanillaEventHandler")', // we are calling json method
+                    dataType: 'json',
+                    data: { ruc: $("#ddl_compania").val()},
+                   // here we are get value of selected country and passing same value
+                   //   as inputto json method GetStates.
+                    success: function (states) {
+                        // states contains the JSON formatted list
+                        // of states passed from the controller
+                        $.each(states, function (i, state) {
+                            $("#ddl_planilla").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+                        // here we are adding option for States
+                        });
+                        FillMes();
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
+        };
+        function FillMes() {
+            //Dropdownlist Selectedchange event
+            $("#ddl_mes").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("FillMesEventHandler")', // we are calling json method
+                    dataType: 'json',
+                    data: { ruc: $("#ddl_compania").val(), ejercicio: $("#ddl_ejercicio").val(), planilla: $("#ddl_planilla").val() },
+                   // here we are get value of selected country and passing same value
+                   //   as inputto json method GetStates.
+                    success: function (states) {
+                        // states contains the JSON formatted list
+                        // of states passed from the controller
+                        $.each(states, function (i, state) {
+                            $("#ddl_mes").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+                        // here we are adding option for States
+                        });
+                        FillPeriodo();
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
+        };
+        function FillPeriodo() {
+            //Dropdownlist Selectedchange event
+            $("#ddl_periodo").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("FillPeriodoEventHandler")', // we are calling json method
+                    dataType: 'json',
+                    data: { ruc: $("#ddl_compania").val(), planilla: $("#ddl_planilla").val(), ejercicio: $("#ddl_ejercicio").val(), mes: $("#ddl_mes").val() },
+                   // here we are get value of selected country and passing same value
+                   //   as inputto json method GetStates.
+                    success: function (states) {
+                        // states contains the JSON formatted list
+                        // of states passed from the controller
+                        $.each(states, function (i, state) {
+                            $("#ddl_periodo").append('<option value="' + state.Value + '">' +
+                             state.Text + '</option>');
+                        // here we are adding option for States
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
+        };
+
+        $(document).ready(function () {
+            //Dropdownlist Selectedchange event
+            $("#ddl_compania").change(function () {
+                $("#ddl_planilla").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("FillPlanillaEventHandler")', // we are calling json method
+                    dataType: 'json',
+                    data: { ruc: $("#ddl_compania").val() },
+                    success: function (states) {
+                        $.each(states, function (i, state) {
+                            $("#ddl_planilla").append('<option value="' + state.Value + '">' +
+                                state.Text + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
+            });
+
+            //Dropdownlist Selectedchange event
+            $("#ddl_planilla").change(function () {
+                $("#ddl_periodo").empty();
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("FillPeriodoEventHandler")', // we are calling json method
+                        dataType: 'json',
+                        data: { ruc: $("#ddl_compania").val(), planilla: $("#ddl_planilla").val(), ejercicio: $("#ddl_ejercicio").val(), mes: $("#ddl_mes").val() },
+                       // here we are get value of selected country and passing same value
+                       //   as inputto json method GetStates.
+                        success: function (states) {
+                            // states contains the JSON formatted list
+                            // of states passed from the controller
+                            $.each(states, function (i, state) {
+                                $("#ddl_periodo").append('<option value="' + state.Value + '">' +
+                                 state.Text + '</option>');
+                            // here we are adding option for States
+                            });
+                            FillMes();
+                        },
+                        error: function (ex) {
+                            alert('Failed to retrieve states.' + ex);
+                        }
+                    });
+                    return false;
+            });
+            //Dropdownlist Selectedchange event
+            $("#ddl_ejercicio").change(function () {
+                $("#ddl_periodo").empty();
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("FillPeriodoEventHandler")', // we are calling json method
+                        dataType: 'json',
+                        data: { ruc: $("#ddl_compania").val(), planilla: $("#ddl_planilla").val(), ejercicio: $("#ddl_ejercicio").val(), mes: $("#ddl_mes").val() },
+                       // here we are get value of selected country and passing same value
+                       //   as inputto json method GetStates.
+                        success: function (states) {
+                            // states contains the JSON formatted list
+                            // of states passed from the controller
+                            $.each(states, function (i, state) {
+                                $("#ddl_periodo").append('<option value="' + state.Value + '">' +
+                                 state.Text + '</option>');
+                            // here we are adding option for States
+                            });
+                        },
+                        error: function (ex) {
+                            alert('Failed to retrieve states.' + ex);
+                        }
+                    });
+                    return false;
+            });
+            //Dropdownlist Selectedchange event
+            $("#ddl_mes").change(function () {
+                $("#ddl_periodo").empty();
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("FillPeriodoEventHandler")', // we are calling json method
+                        dataType: 'json',
+                        data: { ruc: $("#ddl_compania").val(), planilla: $("#ddl_planilla").val(), ejercicio: $("#ddl_ejercicio").val(), mes: $("#ddl_mes").val() },
+                       // here we are get value of selected country and passing same value
+                       //   as inputto json method GetStates.
+                        success: function (states) {
+                            // states contains the JSON formatted list
+                            // of states passed from the controller
+                            $.each(states, function (i, state) {
+                                $("#ddl_periodo").append('<option value="' + state.Value + '">' +
+                                 state.Text + '</option>');
+                            // here we are adding option for States
+                            });
+                        },
+                        error: function (ex) {
+                            alert('Failed to retrieve states.' + ex);
+                        }
+                    });
+                    return false;
+            });
+            //Dropdownlist Selectedchange event
+            $("#ddl_ejercicio").change(function () {
+            //Dropdownlist Selectedchange event
+                $("#ddl_mes").empty();
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("FillMesEventHandler")', // we are calling json method
+                        dataType: 'json',
+                        data: { ruc: $("#ddl_compania").val(), ejercicio: $("#ddl_ejercicio").val(), planilla: $("#ddl_planilla").val() },
+                       // here we are get value of selected country and passing same value
+                       //   as inputto json method GetStates.
+                        success: function (states) {
+                            // states contains the JSON formatted list
+                            // of states passed from the controller
+                            $.each(states, function (i, state) {
+                                $("#ddl_mes").append('<option value="' + state.Value + '">' +
+                                 state.Text + '</option>');
+                            // here we are adding option for States
+                            });
+                            FillPeriodo();
+                        },
+                        error: function (ex) {
+                            alert('Failed to retrieve states.' + ex);
+                        }
+                    });
+                    return false;
+            });
+        });
+
+        $('#btnXcube').click(function () {
+            var Notepad = "";
+            var ddl_compania = $('#ddl_compania').val();
+            var ddl_planilla = $('#ddl_planilla').val();
+            var ddl_proceso = $('#ddl_proceso').val();
+            var ddl_cobertura = $('#ddl_cobertura').val();
+            var ddl_ejercicio = $('#ddl_ejercicio').val();
+
+            var ddl_mes = $('#ddl_mes').val();
+            var ddl_periodo = $('#ddl_periodo').val();
+
+            var rb_planilla = $("#rb_planilla").is(":checked");
+            var rb_datos = $("#rb_datos").is(":checked");
+            var rb_padron = $("#rb_padron").is(":checked");
+            var rb_cuentas = $("#rb_cuentas").is(":checked");
+            var rb_Ccc = $("#rb_Ccc").is(":checked");
+
+            var ddl_grafico = $('#ddl_grafico').val();
+
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("FillParametersCube", "CuboMaster")',
+                data: { ddl_compania: ddl_compania, ddl_planilla: ddl_planilla, ddl_proceso: ddl_proceso, ddl_cobertura: ddl_cobertura, ddl_ejercicio: ddl_ejercicio, ddl_mes: ddl_mes, ddl_periodo: ddl_periodo, rb_planilla: rb_planilla, rb_datos: rb_datos, rb_padron: rb_padron, rb_cuentas: rb_cuentas, rb_Ccc: rb_Ccc, ddl_grafico: ddl_grafico},
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    var datos = data.data;
+                    console.log(datos);
+                    $(datos).each(function (i, v) {
+                        if (v.DivInfoV == true) {
+                            $('#divinfo').html("<div></div>");
+                            $('#divinfo').removeClass("alert alert-danger");
+                            $('#divmessage').addClass(v.DivInfoCss);
+                            $('#divmessage').html("<div class=\"container-fluid\"><p><p/><b>" + v.DivMessage + "</b></p></div>");
+                            Notepad = v.DivMessage;
+                        } else {
+                            $('#divmessage').html("<div></div>");
+                            $('#divmessage').removeClass("alert alert-danger");
+                            $('#divinfo').addClass(v.DivInfoCss);
+                            $('#divinfo').html("<div class=\"container-fluid\"><p><p/><b>" + v.DivMessage + "</b></p></div>");
+                            Notepad = v.DivMessage;
+                        }
+                    });
+
+                },
+                error: function (msg) {
+                    alert("Error al redireccionar");
+                }
+            });
+            //if (Notepad != "") {
+            if ($("#rb_planilla").is(":checked") === true) {
+            var path = '@Url.Content("~/Cubo/Index")'
+                //$(this).attr("href", path);
+                window.open(path);
+
+            }
+            if ($("#rb_datos").is(":checked") === true) {
+            var path = '@Url.Content("~/Cubo/Cubo_Datos")'
+                //$(this).attr("href", path);
+                window.open(path);
+
+            }
+            if ($("#rb_padron").is(":checked") === true) {
+            var path = '@Url.Content("~/Cubo/Cubo_Padron")'
+                //$(this).attr("href", path);
+                window.open(path);
+
+            }
+            if ($("#rb_cuentas").is(":checked") === true) {
+            var path = '@Url.Content("~/Cubo/Cubo_CuentasCorrientes")'
+                //$(this).attr("href", path);
+                window.open(path);
+
+            }
+            if ($("#rb_Ccc").is(":checked") === true) {
+            var path = '@Url.Content("~/Cubo/Cubo_Vacaciones")'
+                window.open(path);
+                }
+            //}
+       });
+    </script>
+}

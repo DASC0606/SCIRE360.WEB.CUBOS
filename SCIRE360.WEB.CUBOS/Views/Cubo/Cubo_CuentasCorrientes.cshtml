@@ -1,0 +1,358 @@
+﻿@{
+    Layout = null;
+}
+@model IEnumerable<Entidad.Cubo_CuentasCorrientes>
+@{
+    ClientSettingsModel optionsModel = ViewBag.DemoSettingsModel;
+    ClientSettingsModel optionsModel1 = ViewBag.DemoSettingsModel1;
+}
+@{
+    ViewBag.Title = "Cubo de cuentas corrientes - Scire 360"; 
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewBag.Title</title>
+    <!--=====================================================================================================-->
+    <!-- base:css -->
+    @*@Styles.Render("~/Content/template1")*@
+    <link href="~/Content/bootstrap/vendors/mdi/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/vendors/feather/feather.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/vendors/base/vendor.bundle.base.css" rel="stylesheet" />
+
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link href="~/Content/bootstrap/vendors/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/bootstrap/vendors/jquery-bar-rating/fontawesome-stars-o.css" rel="stylesheet">
+    <link href="~/Content/bootstrap/vendors/jquery-bar-rating/fontawesome-stars.css" rel="stylesheet">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    @*@Styles.Render("~/Content/template3")*@
+    <link href="~/Content/bootstrap/css/style.css" rel="stylesheet" />
+    <script src="~/Content/bootstrap/vendors/base/vendor.bundle.base.js"></script>
+
+
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    @*<script src="Content/bootstrap/vendors/base/vendor.bundle.base.js"></script>*@
+
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="~/Content/bootstrap/js/off-canvas.js"></script>
+    <script src="~/Content/bootstrap/js/hoverable-collapse.js"></script>
+    <script src="~/Content/bootstrap/js/template.js"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <script src="~/Content/bootstrap/vendors/chart.js/Chart.min.js"></script>
+    <script src="~/Content/bootstrap/vendors/jquery-bar-rating/jquery.barrating.min.js"></script>
+    <script src="~/Content/bootstrap/js/dashboard.js"></script>
+
+    @Html.C1().Styles().Theme(Theme.CurrentTheme)
+    @Styles.Render("~/BootStrapCss")
+    @Styles.Render("~/Content/css/explorer")
+    @Styles.Render("~/Content/SyntaxHighlighter/codeHighlight")
+
+    <script src="~/Scripts/jquery.js"></script>
+    @Html.C1().Scripts().Basic().Olap()
+    @Scripts.Render("~/bundles/explorer")
+
+
+    <script>
+    </script>
+    <script src="~/Scripts/ControlLayout.js"></script>
+    @Scripts.Render("~/bundles/SyntaxHighlighter/codeHighlight")
+</head>
+<body>
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center" style="background: #ffffff">
+            <a class="navbar-brand brand-logo" style="padding-top:5%" href="#">
+                <img style="width: 150px; height: 100%;" src="~/Image/Scire 360.png" />
+            </a>
+            <a class="navbar-brand brand-logo-mini" style="padding-top:10%" href="#">
+                <img style="width: 150px; height: 100%;" src="~/Image/favicon.png" />
+            </a>
+        </div>
+
+    </nav>
+
+    <!-- partial -->
+    <div class="">
+
+        <!-- partial -->
+        @*<div class="main-panel">
+            <div class="content-wrapper">*@
+
+
+        <div class="col-lg-12 grid-margin-lg-0  grid-margin">
+            
+            <!-- DataTables Example -->
+            <div class="card mb-0">
+                <div class="card-header" style="text-align: center; background:#ffffff">
+                    <h4 style="color: #987CC8"><b>Cubo de cuentas corrientes</b></h4>
+                </div>
+
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <div class="container-fluid">
+                            <div class="row">
+                            </div>
+                            <div class="row">
+                                <h4><i><b style="color: #3FC1F4">CUBO OLAP</b> | <span style="font-size: 12px;">Mediante esta pantalla podrá diseñar y gráficar el tipo de reporte que se desea</span></i></h4>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+                    <div class="col-lg- d-none d-lg-block bg-register-image"></div>
+                    <p></p>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link " id="home1-tab" data-toggle="tab" href="#home1" role="tab" aria-controls="home1" aria-selected="true"><b>DATOS CUBO</b></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link show active" id="home2-tab" data-toggle="tab" href="#home2" role="tab" aria-controls="home2" aria-selected="false"><b>CUBO DE DATOS </b></a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" id="home3-tab" data-toggle="tab" href="#home3" role="tab" aria-controls="home3" aria-selected="false"><b>GRÁFICOS</b></a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane " id="home1" role="tabpanel" aria-labelledby="home1-tab" aria-selected="true">
+                            <p></p>
+                            @Html.ActionLink("VOLVER PARAMETROS", "Index", "CuboMaster", null, new { @id = "btnXcube1", @class = "btn btn-danger btn-sm", @style = "color: white;font-size:13px;font-weight:bold;float:left;width:15%" })
+
+                            <div class="col-sm-12">
+                                <p></p>
+                                @(Html.C1().PivotEngine().Id("indexEngine")
+                                    .ShowRowTotals(ShowTotals.Subtotals)
+                                    .ShowColumnTotals(ShowTotals.Subtotals)
+                                    .TotalsBeforeData(false)
+                                    .SortableGroups(true)
+                                    .Bind(Model)
+                                    .RowFields(pfcb => pfcb.Items("TRABAJADOR"))
+                                    .RowFields(pfcb => pfcb.Items("DNI"))
+                                    .ColumnFields(cfcb => cfcb.Items("OPERACION"))
+                                    .ValueFields(vfcb => vfcb.Items("MONTO_DE_PRESTAMO"))
+                                    .ShowZeros(true)
+                                    )
+                                <div class="col-sm-12  col-md-12">
+                                    @Html.C1().PivotPanel().Id(optionsModel.ControlId).ItemsSourceId("indexEngine").CssStyle("font-size", "11px")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane active" id="home2" role="tabpanel" aria-labelledby="home2-tab">
+                            <div class="col-sm-12">
+                                <p></p>
+                                <div class="col-sm-12 col-md-12" style="text-align:right">
+                                    <button type="button" class="btn btn-success" style="font-size:13px;font-weight:bold; float:right; width:15%" onclick="excelExport()">
+                                        EXPORTAR EXCEL
+                                    </button>
+                                </div>
+                                <div class="table-responsive">
+                                    <div class="col-sm-12 col-md-12">
+                                        @(Html.C1().PivotGrid().Id("indexGrid")
+                                            .ItemsSourceId("indexEngine")
+                                            .OutlineMode(false)
+                                            .ShowValueFieldHeaders(true).CssStyle("font-size", "8px"))
+                                        @*<p>
+                                <span style="vertical-align:top; color:black;">
+                                    OutlineMode&nbsp;<input id="outlineMode" type="checkbox" onchange="toggleOulineMode(event)" style="margin-right:5em;" />
+                                    ShowValueFieldHeaders&nbsp;<input id="ShowValueFieldHeaders" type="checkbox" onchange="toggleShowValueFieldHeaders(event)" />
+                                </span>
+                            </p>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="home3" role="tabpanel" aria-labelledby="home3-tab">
+                            <div class="col-sm-12">
+                                <br />
+                                <p></p>
+                                <div class="table-responsive">
+                                    @if (@Session["ddl_grafico"].ToString() == "1")
+                                    {
+                                        @Html.C1().PivotChart().Id(optionsModel1.ControlId).ItemsSourceId("indexEngine").CssStyle("font-size", "8px").CssStyle("text-transform", "uppercase").ShowTitle(true).ChartType(PivotChartType.Column)
+                                    }
+                                    @if (@Session["ddl_grafico"].ToString() == "2")
+                                    {
+                                        @Html.C1().PivotChart().Id(optionsModel1.ControlId).ItemsSourceId("indexEngine").CssStyle("font-size", "8px").CssStyle("text-transform", "uppercase").ShowTitle(true).ChartType(PivotChartType.Area)
+                                    }
+                                    @if (@Session["ddl_grafico"].ToString() == "3")
+                                    {
+                                        @Html.C1().PivotChart().Id(optionsModel1.ControlId).ItemsSourceId("indexEngine").CssStyle("font-size", "8px").CssStyle("text-transform", "uppercase").ShowTitle(true).ChartType(PivotChartType.Bar)
+                                    }
+                                    @if (@Session["ddl_grafico"].ToString() == "4")
+                                    {
+                                        @Html.C1().PivotChart().Id(optionsModel1.ControlId).ItemsSourceId("indexEngine").CssStyle("font-size", "8px").CssStyle("text-transform", "uppercase").ShowTitle(true).ChartType(PivotChartType.Line)
+                                    }
+                                    @if (@Session["ddl_grafico"].ToString() == "5")
+                                    {
+                                        @Html.C1().PivotChart().Id(optionsModel1.ControlId).ItemsSourceId("indexEngine").CssStyle("font-size", "8px").CssStyle("text-transform", "uppercase").ShowTitle(true).ChartType(PivotChartType.Pie)
+                                    }
+                                    @if (@Session["ddl_grafico"].ToString() == "6")
+                                    {
+                                        @Html.C1().PivotChart().Id(optionsModel1.ControlId).ItemsSourceId("indexEngine").CssStyle("font-size", "8px").CssStyle("text-transform", "uppercase").ShowTitle(true).ChartType(PivotChartType.Scatter)
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+        };
+        function saveView() {
+            var ng = c1.getService('indexEngine');
+            if (ng && ng.isViewDefined) {
+                localStorage.viewDefinition = ng.viewDefinition;
+            }
+        }
+        function loadView() {
+            var ng = c1.getService('indexEngine');
+            if (ng && localStorage.viewDefinition) {
+                ng.viewDefinition = localStorage.viewDefinition;
+                var cmbRowTotals = wijmo.Control.getControl('#RowTotals');
+                if (cmbRowTotals) {
+                    cmbRowTotals.selectedValue = ng.showRowTotals;
+                }
+
+                var cmbColTotals = wijmo.Control.getControl('#ColTotals');
+                if (cmbColTotals) {
+                    cmbColTotals.selectedValue = ng.showColumnTotals;
+                }
+
+                var chkShowZeros = document.getElementById('ColTotals');
+                if (chkShowZeros) {
+                    chkShowZeros.checked = ng.showZeros;
+                }
+            }
+        }
+        function excelExport() {
+            var pivotGrid = wijmo.Control.getControl('#indexGrid');
+
+            // create book with current view
+            var book = wijmo.grid.xlsx.FlexGridXlsxConverter.save(pivotGrid, {
+                includeColumnHeaders: true,
+                includeRowHeaders: true
+            });
+            book.sheets[0].name = 'CUBO DE CUENTAS CORRIENTES';
+            addTitleCell(book.sheets[0], getViewTitle(pivotGrid.engine));
+
+            // add sheet with transposed view
+            transposeView(pivotGrid.engine);
+            var transposed = wijmo.grid.xlsx.FlexGridXlsxConverter.save(pivotGrid, {
+                includeColumnHeaders: true,
+                includeRowHeaders: true
+            });
+            transposed.sheets[0].name = 'CUBO DE CUENTAS CORRIENTES VERTICAL';
+            addTitleCell(transposed.sheets[0], getViewTitle(pivotGrid.engine));
+            book.sheets.push(transposed.sheets[0]);
+            transposeView(pivotGrid.engine);
+
+            // save the book
+            book.save('CUBO_CUENTAS_CORRIENTES.OLAP.' + f.getDate() + "" + (f.getMonth() + 1) + "" + f.getFullYear() + '.xlsx');
+        }
+
+        // build a title for the current view
+        function getViewTitle(ng) {
+            var title = '';
+            for (var i = 0; i < ng.valueFields.length; i++) {
+                if (i > 0) title += ', ';
+                title += ng.valueFields[i].header;
+            }
+            title += ' POR ';
+            if (ng.rowFields.length) {
+                for (var i = 0; i < ng.rowFields.length; i++) {
+                    if (i > 0) title += ', ';
+                    title += ng.rowFields[i].header;
+                }
+            }
+            if (ng.rowFields.length && ng.columnFields.length) {
+                title += ' Y POR ';
+            }
+            if (ng.columnFields.length) {
+                for (var i = 0; i < ng.columnFields.length; i++) {
+                    if (i > 0) title += ', ';
+                    title += ng.columnFields[i].header;
+                }
+            }
+            return title;
+        }
+
+        function transposeView(ng) {
+            ng.deferUpdate(function () {
+
+                // save row/col fields
+                var rows = [],
+                    cols = [];
+                for (var r = 0; r < ng.rowFields.length; r++) {
+                    rows.push(ng.rowFields[r].header);
+                }
+                for (var c = 0; c < ng.columnFields.length; c++) {
+                    cols.push(ng.columnFields[c].header);
+                }
+
+                // clear row/col fields
+                ng.rowFields.clear();
+                ng.columnFields.clear();
+
+                // restore row/col fields in transposed order
+                for (var r = 0; r < rows.length; r++) {
+                    ng.columnFields.push(rows[r]);
+                }
+                for (var c = 0; c < cols.length; c++) {
+                    ng.rowFields.push(cols[c]);
+                }
+            });
+        }
+
+        // adds a title cell into an xlxs sheet
+        function addTitleCell(sheet, title) {
+
+            // create cell
+            var cell = new wijmo.xlsx.WorkbookCell();
+            cell.value = title;
+            cell.style = new wijmo.xlsx.WorkbookStyle();
+            cell.style.font = new wijmo.xlsx.WorkbookFont();
+            cell.style.font.bold = true;
+
+            // create row to hold the cell
+            var row = new wijmo.xlsx.WorkbookRow();
+            row.cells[0] = cell;
+
+            // and add the new row to the sheet
+            sheet.rows.splice(0, 0, row);
+        }
+
+        // toggle outline mode
+        function toggleOulineMode(e) {
+            var pivotGrid = wijmo.Control.getControl('#indexGrid');
+            pivotGrid.outlineMode = e.target.checked;
+        }
+        // toggle ShowValueFieldHeaders
+        function toggleShowValueFieldHeaders(e) {
+            var pivotGrid = wijmo.Control.getControl('#indexGrid');
+            pivotGrid.showValueFieldHeaders = e.target.checked;
+        }
+    </script>
+</body>
+</html>
