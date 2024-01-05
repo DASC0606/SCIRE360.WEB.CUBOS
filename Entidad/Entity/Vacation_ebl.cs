@@ -8,7 +8,7 @@ namespace Entidad
 {
     public partial class Cubo_Vacation
     {
-        public Int64 ID { get; set; }
+        //public Int64 ID { get; set; }
         public string VACACIONES_ID { get; set; }
         public string VACACIONES_PAGADAS_ID { get; set; }
         public string PERSONAL_ID { get; set; }

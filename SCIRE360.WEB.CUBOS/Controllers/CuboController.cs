@@ -43,12 +43,14 @@ namespace SCIRE360.WEB.CUBOS.Controllers
         };
 
         // GET: Cubo
-        public async Task<ActionResult> Index(string ddl_compania, string ddl_planilla, string ddl_proceso, string ddl_cobertura, string ddl_ejercicio, string ddl_mes, string ddl_periodo, string cubo, string ddl_grafico)
+        public async Task<ActionResult> Index(string corpotareId, string ddl_compania, string ddl_planilla, string ddl_proceso, string ddl_cobertura, string ddl_ejercicio, string ddl_mes, string ddl_periodo, string cubo, string ddl_grafico)
         {
-            Session["ddl_compania"] = ddl_compania;
+            Session["iToken"] = "adadadadadawdaw";
+            Session["corpotareId"] = corpotareId;
 
-            if (Session["ddl_compania"].ToString() != null)
+            if (Session["corpotareId"].ToString() != null)
             {
+                Session["ddl_compania"] = ddl_compania;
                 Session["ddl_planilla"] = ddl_planilla;
                 Session["ddl_proceso"] = ddl_proceso;
                 Session["ddl_cobertura"] = ddl_cobertura;
@@ -81,7 +83,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                     TblUsuarioNE ProcUsuario = new TblUsuarioNE();
                     List<Cubo_Planilla> Cubo_Planilla = new List<Cubo_Planilla>();
 
-                    //Cubo_Planilla = await ProcUsuario.listarCuboPlanilla(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_Planilla = await ProcUsuario.listarCuboPlanilla(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
 
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
@@ -130,7 +132,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                     TblUsuarioNE ProcUsuario = new TblUsuarioNE();
                     List<Cubo_Datos> Cubo_Datos = new List<Cubo_Datos>();
 
-                    //Cubo_Datos = await ProcUsuario.listarCuboDatos(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_Datos = await ProcUsuario.listarCuboDatos(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
                     foreach (var item in OlapModells.Settings)
@@ -145,7 +147,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                     ViewBag.id_grafico = new SelectList(ChartSettings, "ChartType", "ChartType");
                     ViewBag.DemoSettingsModel1 = engineModel1;
                     ViewBag.DemoSettingsModel = OlapModells;
-                    if (Cubo_Datos.Count > 0)
+                    /*if (Cubo_Datos.Count > 0)
                     {
                         DivInfoV = false;
                         DivInfoCss = "";
@@ -168,14 +170,14 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                         defaultHREF = "CuboMaster";
                         string strPage = defaultHREF;
                         return RedirectToAction("Index", strPage);
-                    }
+                    }*/
                     return View(Cubo_Datos);
                 }
                 if (cubos == "CuboTrabajadores")
                 {
                     TblUsuarioNE ProcUsuario = new TblUsuarioNE();
                     List<Cubo_Padron> Cubo_Padron = new List<Cubo_Padron>();
-                    //Cubo_Padron = await ProcUsuario.listarCuboPadron(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_Padron = await ProcUsuario.listarCuboPadron(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
 
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
@@ -193,7 +195,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
 
                     ViewBag.DemoSettingsModel1 = engineModel1;
                     ViewBag.DemoSettingsModel = OlapModells;
-                    if (Cubo_Padron.Count > 0)
+                    /*if (Cubo_Padron.Count > 0)
                     {
                         DivInfoV = false;
                         DivInfoCss = "";
@@ -216,14 +218,14 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                         defaultHREF = "CuboMaster";
                         string strPage = defaultHREF;
                         return RedirectToAction("Index", strPage);
-                    }
+                    }*/
                     return View(Cubo_Padron);
                 }
                 if (cubos == "CuboCtaCte")
                 {
                     TblUsuarioNE ProcUsuario = new TblUsuarioNE();
                     List<Cubo_CuentasCorrientes> Cubo_CuentasCorrientes = new List<Cubo_CuentasCorrientes>();
-                    //Cubo_CuentasCorrientes = await ProcUsuario.listarCuboCuentasCorrientes(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_CuentasCorrientes = await ProcUsuario.listarCuboCuentasCorrientes(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
 
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
@@ -241,7 +243,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
 
                     ViewBag.DemoSettingsModel1 = engineModel1;
                     ViewBag.DemoSettingsModel = OlapModells;
-                    if (Cubo_CuentasCorrientes.Count > 0)
+                    /*if (Cubo_CuentasCorrientes.Count > 0)
                     {
                         DivInfoV = false;
                         DivInfoCss = "";
@@ -265,14 +267,14 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                         string strPage = defaultHREF;
                         return RedirectToAction("Index", strPage);
 
-                    }
+                    }*/
                     return View(Cubo_CuentasCorrientes);
                 }
                 if (cubos == "CuboVacaciones")
                 {
                     TblUsuarioNE ProcUsuario = new TblUsuarioNE();
                     List<Cubo_Planilla> Cubo_Planilla = new List<Cubo_Planilla>();
-                    //Cubo_Planilla = await ProcUsuario.listarCuboPlanilla(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_Planilla = await ProcUsuario.listarCuboPlanilla(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
 
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
@@ -291,7 +293,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                     ViewBag.DemoSettingsModel1 = engineModel1;
                     ViewBag.DemoSettingsModel = OlapModells;
                     Session["Cubo_Planilla"] = Cubo_Planilla.Count.ToString();
-                    if (Cubo_Planilla.Count > 0)
+                    /**if (Cubo_Planilla.Count > 0)
                     {
                         DivInfoV = false;
                         DivInfoCss = "";
@@ -315,7 +317,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                         string strPage = defaultHREF;
                         return RedirectToAction("Index", strPage);
 
-                    }
+                    }*/
                     return View(Cubo_Planilla);
                 }
             }
@@ -329,12 +331,14 @@ namespace SCIRE360.WEB.CUBOS.Controllers
             return View();
 
         }
-        public async Task<ActionResult> Cubo_Datos(string ddl_compania, string ddl_planilla, string ddl_proceso, string ddl_cobertura, string ddl_ejercicio, string ddl_mes, string ddl_periodo, string cubo, string ddl_grafico)
+        public async Task<ActionResult> Cubo_Datos(string corpotareId, string ddl_compania, string ddl_planilla, string ddl_proceso, string ddl_cobertura, string ddl_ejercicio, string ddl_mes, string ddl_periodo, string cubo, string ddl_grafico)
         {
-            Session["ddl_compania"] = ddl_compania;
+            Session["iToken"] = "adadadadadawdaw";
+            Session["corpotareId"] = corpotareId;
 
-            if (Session["ddl_compania"].ToString() != null)
+            if (Session["corpotareId"].ToString() != null)
             {
+                Session["ddl_compania"] = ddl_compania;
                 Session["ddl_planilla"] = ddl_planilla;
                 Session["ddl_proceso"] = ddl_proceso;
                 Session["ddl_cobertura"] = ddl_cobertura;
@@ -367,7 +371,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                     TblUsuarioNE tblNE = new TblUsuarioNE();
                     List<Cubo_Planilla> Cubo_Planilla = new List<Cubo_Planilla>();
 
-                    //Cubo_Planilla = await tblNE.listarCuboPlanilla(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_Planilla = await tblNE.listarCuboPlanilla(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
 
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
@@ -393,7 +397,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                     TblUsuarioNE Proc = new TblUsuarioNE();
                     List<Cubo_Datos> Cubo_Datos = new List<Cubo_Datos>();
 
-                    //Cubo_Datos = await Proc.listarCuboDatos(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_Datos = await Proc.listarCuboDatos(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
                     foreach (var item in OlapModells.Settings)
@@ -414,7 +418,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                 {
                     TblUsuarioNE Proc = new TblUsuarioNE();
                     List<Cubo_Padron> Cubo_Padron = new List<Cubo_Padron>();
-                    //Cubo_Padron = await Proc.listarCuboPadron(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_Padron = await Proc.listarCuboPadron(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
 
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
@@ -439,7 +443,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                 {
                     TblUsuarioNE Proc = new TblUsuarioNE();
                     List<Cubo_CuentasCorrientes> Cubo_CuentasCorrientes = new List<Cubo_CuentasCorrientes>();
-                    //Cubo_CuentasCorrientes = await Proc.listarCuboCuentasCorrientes(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_CuentasCorrientes = await Proc.listarCuboCuentasCorrientes(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
 
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
@@ -464,7 +468,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                 {
                     TblUsuarioNE Proc = new TblUsuarioNE();
                     List<Cubo_Planilla> Cubo_Planilla = new List<Cubo_Planilla>();
-                    //Cubo_Planilla = await Proc.listarCuboPlanilla(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_Planilla = await Proc.listarCuboPlanilla(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
 
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
@@ -495,12 +499,15 @@ namespace SCIRE360.WEB.CUBOS.Controllers
             }
             return View();
         }
-        public async Task<ActionResult> Cubo_Padron(string ddl_compania, string ddl_planilla, string ddl_proceso, string ddl_cobertura, string ddl_ejercicio, string ddl_mes, string ddl_periodo, string cubo, string ddl_grafico)
+        public async Task<ActionResult> Cubo_Padron(string corpotareId, string ddl_compania, string ddl_planilla, string ddl_proceso, string ddl_cobertura, string ddl_ejercicio, string ddl_mes, string ddl_periodo, string cubo, string ddl_grafico)
         {
-            Session["ddl_compania"] = ddl_compania;
+            Session["iToken"] = "adadadadadawdaw";
 
-            if (Session["ddl_compania"].ToString() != null)
+            Session["corpotareId"] = corpotareId;
+
+            if (Session["corpotareId"].ToString() != null)
             {
+                Session["ddl_compania"] = ddl_compania;
                 Session["ddl_planilla"] = ddl_planilla;
                 Session["ddl_proceso"] = ddl_proceso;
                 Session["ddl_cobertura"] = ddl_cobertura;
@@ -533,7 +540,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                     TblUsuarioNE Proc = new TblUsuarioNE();
                     List<Cubo_Planilla> Cubo_Planilla = new List<Cubo_Planilla>();
 
-                    //Cubo_Planilla = await Proc.listarCuboPlanilla(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_Planilla = await Proc.listarCuboPlanilla(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
 
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
@@ -559,7 +566,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                     TblUsuarioNE Proc = new TblUsuarioNE();
                     List<Cubo_Datos> Cubo_Datos = new List<Cubo_Datos>();
 
-                    //Cubo_Datos = await Proc.listarCuboDatos(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_Datos = await Proc.listarCuboDatos(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
                     foreach (var item in OlapModells.Settings)
@@ -578,9 +585,10 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                 }
                 if (cubos == "CuboTrabajadores")
                 {
+                    Session["iToken"] = "adawd";
                     TblUsuarioNE Proc = new TblUsuarioNE();
                     List<Cubo_Padron> Cubo_Padron = new List<Cubo_Padron>();
-                    //Cubo_Padron = await Proc.listarCuboPadron(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_Padron = await Proc.listarCuboPadron(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
 
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
@@ -605,7 +613,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                 {
                     TblUsuarioNE Proc = new TblUsuarioNE();
                     List<Cubo_CuentasCorrientes> Cubo_CuentasCorrientes = new List<Cubo_CuentasCorrientes>();
-                    //Cubo_CuentasCorrientes = await Proc.listarCuboCuentasCorrientes(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_CuentasCorrientes = await Proc.listarCuboCuentasCorrientes(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
 
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
@@ -630,7 +638,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                 {
                     TblUsuarioNE Proc = new TblUsuarioNE();
                     List<Cubo_Planilla> Cubo_Planilla = new List<Cubo_Planilla>();
-                    //Cubo_Planilla = await Proc.listarCuboPlanilla(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_Planilla = await Proc.listarCuboPlanilla(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
 
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
@@ -661,12 +669,15 @@ namespace SCIRE360.WEB.CUBOS.Controllers
             }
             return View();
         }
-        public async Task<ActionResult> Cubo_CuentasCorrientes(string ddl_compania, string ddl_planilla, string ddl_proceso, string ddl_cobertura, string ddl_ejercicio, string ddl_mes, string ddl_periodo, string cubo, string ddl_grafico)
+        public async Task<ActionResult> Cubo_CuentasCorrientes(string corpotareId, string ddl_compania, string ddl_planilla, string ddl_proceso, string ddl_cobertura, string ddl_ejercicio, string ddl_mes, string ddl_periodo, string cubo, string ddl_grafico)
         {
-            Session["ddl_compania"] = ddl_compania;
 
-            if (Session["ddl_compania"].ToString() != null)
+            Session["iToken"] = "adadadadadawdaw";
+            Session["corpotareId"] = corpotareId;
+
+            if (Session["corpotareId"].ToString() != null)
             {
+                Session["ddl_compania"] = ddl_compania;
                 Session["ddl_planilla"] = ddl_planilla;
                 Session["ddl_proceso"] = ddl_proceso;
                 Session["ddl_cobertura"] = ddl_cobertura;
@@ -699,7 +710,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                     TblUsuarioNE Proc = new TblUsuarioNE();
                     List<Cubo_Planilla> Cubo_Planilla = new List<Cubo_Planilla>();
 
-                    //Cubo_Planilla = await Proc.listarCuboPlanilla(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_Planilla = await Proc.listarCuboPlanilla(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
 
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
@@ -725,7 +736,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                     TblUsuarioNE Proc = new TblUsuarioNE();
                     List<Cubo_Datos> Cubo_Datos = new List<Cubo_Datos>();
 
-                    //Cubo_Datos = await Proc.listarCuboDatos(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_Datos = await Proc.listarCuboDatos(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
                     foreach (var item in OlapModells.Settings)
@@ -746,7 +757,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                 {
                     TblUsuarioNE Proc = new TblUsuarioNE();
                     List<Cubo_Padron> Cubo_Padron = new List<Cubo_Padron>();
-                    //Cubo_Padron = await Proc.listarCuboPadron(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_Padron = await Proc.listarCuboPadron(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
 
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
@@ -771,7 +782,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                 {
                     TblUsuarioNE Proc = new TblUsuarioNE();
                     List<Cubo_CuentasCorrientes> Cubo_CuentasCorrientes = new List<Cubo_CuentasCorrientes>();
-                    //Cubo_CuentasCorrientes = await Proc.listarCuboCuentasCorrientes(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_CuentasCorrientes = await Proc.listarCuboCuentasCorrientes(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
 
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
@@ -796,7 +807,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                 {
                     TblUsuarioNE Proc = new TblUsuarioNE();
                     List<Cubo_Planilla> Cubo_Planilla = new List<Cubo_Planilla>();
-                    //Cubo_Planilla = await Proc.listarCuboPlanilla(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_Planilla = await Proc.listarCuboPlanilla(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
 
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
@@ -827,12 +838,15 @@ namespace SCIRE360.WEB.CUBOS.Controllers
             }
             return View();
         }
-        public async Task<ActionResult> Cubo_Vacaciones(string ddl_compania, string ddl_planilla, string ddl_proceso, string ddl_cobertura, string ddl_ejercicio, string ddl_mes, string ddl_periodo, string cubo, string ddl_grafico)
+        public async Task<ActionResult> Cubo_Vacaciones(string corpotareId, string ddl_compania, string ddl_planilla, string ddl_proceso, string ddl_cobertura, string ddl_ejercicio, string ddl_mes, string ddl_periodo, string cubo, string ddl_grafico)
         {
-            Session["ddl_compania"] = ddl_compania;
+            Session["iToken"] = "adadadadadawdaw";
 
-            if (Session["ddl_compania"].ToString() != null)
+            Session["corpotareId"] = corpotareId;
+
+            if (Session["corpotareId"].ToString() != null)
             {
+                Session["ddl_compania"] = ddl_compania;
                 Session["ddl_planilla"] = ddl_planilla;
                 Session["ddl_proceso"] = ddl_proceso;
                 Session["ddl_cobertura"] = ddl_cobertura;
@@ -864,7 +878,7 @@ namespace SCIRE360.WEB.CUBOS.Controllers
                 {
                     TblUsuarioNE Proc = new TblUsuarioNE();
                     List<Cubo_Vacation> Cubo_Vacation = new List<Cubo_Vacation>();
-                    //Cubo_Vacation = await Proc.listarCuboVacation(Session["iToken"].ToString(), ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
+                    Cubo_Vacation = await Proc.listarCuboVacation(Session["iToken"].ToString(), corpotareId, ddl_companias, ddl_ejercicios, ddl_procesos, ddl_planillas, ddl_periodos, ddl_mess, ddl_coberturas);
                     OlapModells.ControlId = "indexPanel";
 
                     var engineModel1 = new ClientSettingsModel { Settings = new Dictionary<string, object[]>() };
