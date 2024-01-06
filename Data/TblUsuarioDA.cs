@@ -23,13 +23,14 @@ namespace Alvisoft.DataAccessLayer
 {
     public class TblUsuarioDA
     {
-        public async Task<List<Cubo_Planilla>> listarCuboPlanilla(string token, string id_compania, string id_ejercicio, string Proceso_Id, string id_planilla, string id_periodo, string id_mes, string id_cobertura)
+        public async Task<List<Cubo_Planilla>> listarCuboPlanilla(string token,string corporateId, string id_compania, string id_ejercicio, string Proceso_Id, string id_planilla, string id_periodo, string id_mes, string id_cobertura)
         {
             List<Cubo_Planilla> lista = new List<Cubo_Planilla>();
 
             try
             {
                 var data = new {
+                    corporateId = corporateId,
                     id_compania = id_compania,
                     id_ejercicio = id_ejercicio,
                     Proceso_Id = Proceso_Id,
@@ -43,8 +44,9 @@ namespace Alvisoft.DataAccessLayer
                 _clientHandlerGQ.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
                 using (var httpClient = new HttpClient(_clientHandlerGQ, false))
                 {
+                    httpClient.Timeout = TimeSpan.FromSeconds(500);
                     httpClient.DefaultRequestHeaders.Add("Authorization", token/*Session["iToken"].ToString()*/);
-                    string url = ConfigurationSettings.AppSettings["apiRest"].ToString() + "TblUsuario/listarCuboPlanilla";
+                    string url = ConfigurationSettings.AppSettings["apiRest"].ToString() + "Cubos/listarCuboPlanilla";
                     using (var response = await httpClient.PostAsync(url, _content))
                     {
                         List<Cubo_Planilla> listaDes = new List<Cubo_Planilla>();
@@ -67,7 +69,7 @@ namespace Alvisoft.DataAccessLayer
 
             return lista;
         }
-        public async Task<List<Cubo_Datos>> listarCuboDatos(string token, string id_compania, string id_ejercicio, string Proceso_Id, string id_planilla, string id_periodo, string id_mes, string id_cobertura)
+        public async Task<List<Cubo_Datos>> listarCuboDatos(string token, string corporateId, string id_compania, string id_ejercicio, string Proceso_Id, string id_planilla, string id_periodo, string id_mes, string id_cobertura)
         {
             List<Cubo_Datos> lista = new List<Cubo_Datos>();
 
@@ -75,6 +77,7 @@ namespace Alvisoft.DataAccessLayer
             {
                 var data = new
                 {
+                    corporateId = corporateId,
                     id_compania = id_compania,
                     id_ejercicio = id_ejercicio,
                     Proceso_Id = Proceso_Id,
@@ -89,7 +92,7 @@ namespace Alvisoft.DataAccessLayer
                 using (var httpClient = new HttpClient(_clientHandlerGQ, false))
                 {
                     httpClient.DefaultRequestHeaders.Add("Authorization", token/*Session["iToken"].ToString()*/);
-                    string url = ConfigurationSettings.AppSettings["apiRest"].ToString() + "TblUsuario/listarCuboDatos";
+                    string url = ConfigurationSettings.AppSettings["apiRest"].ToString() + "Cubos/listarCuboDatos";
                     using (var response = await httpClient.PostAsync(url, _content))
                     {
                         List<Cubo_Datos> listaDes = new List<Cubo_Datos>();
@@ -112,7 +115,7 @@ namespace Alvisoft.DataAccessLayer
 
             return lista;
         }
-        public async Task<List<Cubo_Padron>> listarCuboPadron(string token, string id_compania, string id_ejercicio, string Proceso_Id, string id_planilla, string id_periodo, string id_mes, string id_cobertura)
+        public async Task<List<Cubo_Padron>> listarCuboPadron(string token, string corporateId, string id_compania, string id_ejercicio, string Proceso_Id, string id_planilla, string id_periodo, string id_mes, string id_cobertura)
         {
             List<Cubo_Padron> lista = new List<Cubo_Padron>();
 
@@ -120,6 +123,7 @@ namespace Alvisoft.DataAccessLayer
             {
                 var data = new
                 {
+                    corporateId = corporateId,
                     id_compania = id_compania,
                     id_ejercicio = id_ejercicio,
                     id_planilla = id_planilla,
@@ -133,7 +137,7 @@ namespace Alvisoft.DataAccessLayer
                 using (var httpClient = new HttpClient(_clientHandlerGQ, false))
                 {
                     httpClient.DefaultRequestHeaders.Add("Authorization", token/*Session["iToken"].ToString()*/);
-                    string url = ConfigurationSettings.AppSettings["apiRest"].ToString() + "TblUsuario/listarCuboPadron";
+                    string url = ConfigurationSettings.AppSettings["apiRest"].ToString() + "Cubos/listarCuboPadron";
                     using (var response = await httpClient.PostAsync(url, _content))
                     {
                         List<Cubo_Padron> listaDes = new List<Cubo_Padron>();
@@ -156,7 +160,7 @@ namespace Alvisoft.DataAccessLayer
 
             return lista;
         }
-        public async Task<List<Cubo_CuentasCorrientes>> listarCuboCuentasCorrientes(string token, string id_compania, string id_ejercicio, string Proceso_Id, string id_planilla, string id_periodo, string id_mes, string id_cobertura)
+        public async Task<List<Cubo_CuentasCorrientes>> listarCuboCuentasCorrientes(string token, string corporateId, string id_compania, string id_ejercicio, string Proceso_Id, string id_planilla, string id_periodo, string id_mes, string id_cobertura)
         {
             List<Cubo_CuentasCorrientes> lista = new List<Cubo_CuentasCorrientes>();
 
@@ -164,7 +168,13 @@ namespace Alvisoft.DataAccessLayer
             {
                 var data = new
                 {
-                    id_compania = id_compania
+                    corporateId = corporateId,
+                    id_compania = id_compania,
+                    id_ejercicio = id_ejercicio,
+                    id_planilla = id_planilla,
+                    id_periodo = id_periodo,
+                    id_mes = id_mes,
+                    id_cobertura = id_cobertura
                 };
                 StringContent _content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
                 HttpClientHandler _clientHandlerGQ = new HttpClientHandler();
@@ -172,7 +182,7 @@ namespace Alvisoft.DataAccessLayer
                 using (var httpClient = new HttpClient(_clientHandlerGQ, false))
                 {
                     httpClient.DefaultRequestHeaders.Add("Authorization", token/*Session["iToken"].ToString()*/);
-                    string url = ConfigurationSettings.AppSettings["apiRest"].ToString() + "TblUsuario/listarCuboCuentasCorrientes";
+                    string url = ConfigurationSettings.AppSettings["apiRest"].ToString() + "Cubos/listarCuboCuentasCorrientes";
                     using (var response = await httpClient.PostAsync(url, _content))
                     {
                         List<Cubo_CuentasCorrientes> listaDes = new List<Cubo_CuentasCorrientes>();
@@ -195,7 +205,7 @@ namespace Alvisoft.DataAccessLayer
 
             return lista;
         }
-        public async Task<List<Cubo_Vacation>> listarCuboVacation(string token, string id_compania, string id_ejercicio, string Proceso_Id, string id_planilla, string id_periodo, string id_mes, string id_cobertura)
+        public async Task<List<Cubo_Vacation>> listarCuboVacation(string token, string corporateId, string id_compania, string id_ejercicio, string Proceso_Id, string id_planilla, string id_periodo, string id_mes, string id_cobertura)
         {
             List<Cubo_Vacation> lista = new List<Cubo_Vacation>();
 
@@ -203,6 +213,7 @@ namespace Alvisoft.DataAccessLayer
             {
                 var data = new
                 {
+                    corporateId = corporateId,
                     id_compania = id_compania,
                     id_planilla = id_planilla,
                     id_periodo = id_periodo,
@@ -214,7 +225,7 @@ namespace Alvisoft.DataAccessLayer
                 {
                     httpClient.Timeout = TimeSpan.FromMinutes(5);
                     httpClient.DefaultRequestHeaders.Add("Authorization", token/*Session["iToken"].ToString()*/);
-                    string url = ConfigurationSettings.AppSettings["apiRest"].ToString() + "TblUsuario/listarCuboVacation";
+                    string url = ConfigurationSettings.AppSettings["apiRest"].ToString() + "Cubos/listarCuboVacation";
                     using (var response = await httpClient.PostAsync(url, _content))
                     {
                         List<Cubo_Vacation> listaDes = new List<Cubo_Vacation>();
